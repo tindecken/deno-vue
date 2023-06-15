@@ -30,6 +30,6 @@ jobs:
       - name: Deploy to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: deno-vue
+          project: old-stoat-27
           root: dist
-          entrypoint: https://deno.land/std@0.191.0/http/file_server.ts
+          entrypoint: https://deno.land/std@0.157.0/http/file_server.ts
