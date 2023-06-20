@@ -1,27 +1,16 @@
-import { Application } from "https://deno.land/x/oak/mod.ts";
+import { Application } from "https://deno.land/x/oak@v12.5.0/mod.ts";
+import usersRouter from './routers/usersRouter';
+import categoriesRouter from './routers/categoriesRouter';
+import tasksRouter from './routers/tasksRouter';
 
 const app = new Application();
+app.use(usersRouter.routes());
+app.use(usersRouter.allowedMethods());
 
-// Logger
-app.use(async (ctx, next) => {
-  await next();
-  const rt = ctx.response.headers.get("X-Response-Time");
-  console.log('rt', rt)
-});
+app.use(categoriesRouter.routes());
+app.use(categoriesRouter.allowedMethods());
 
-// Timing
-app.use(async (ctx, next) => {
-  const start = Date.now();
-  await next();
-  const ms = Date.now() - start;
-  ctx.response.headers.set("X-Response-Time", `${ms}ms`);
-  
-});
+app.use(tasksRouter.routes());
+app.use(tasksRouter.allowedMethods());
 
-app.use((ctx) => {
-  ctx.response.body = "Hello World!!!!!!!";
-});
-
-
-
-await app.listen({ port: 8090 });
+await app.listen({port: 8090});

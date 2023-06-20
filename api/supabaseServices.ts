@@ -1,4 +1,6 @@
-import { createClient } from "https://esm.sh/@supabase/supabase-js";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.25.0";
+import { CreateUserModel } from "../models/Users/CreateUserModel";
+import { LoginUserModel } from "../models/Users/LoginUserModel";
 
 const options = {
   schema: "public",
@@ -14,9 +16,22 @@ const supabase = createClient(
   options
 );
 
-const { data, error } = await supabase
-  .from('users')
-  .select()
+const login = async (loginUserModel: LoginUserModel) => {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: loginUserModel.Email,
+    password: loginUserModel,
+  })
+  if (error == null) return data
+  else return error
+}
 
-console.log('data', data)
-console.log('error', error)
+const createNewUser = async (createUserModel: CreateUserModel) => {
+  const { data, error } = await supabase.auth.signUp({
+    email: createUserModel.Email,
+    password: createUserModel.Password,
+  })
+  if (error == null) return data
+  else return error
+}
+
+export { createNewUser, login }
