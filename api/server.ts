@@ -1,7 +1,7 @@
 import { Application } from "https://deno.land/x/oak@v12.5.0/mod.ts";
-import usersRouter from './routers/usersRouter';
-import categoriesRouter from './routers/categoriesRouter';
-import tasksRouter from './routers/tasksRouter';
+import usersRouter from './routers/usersRouter.ts';
+import categoriesRouter from './routers/categoriesRouter.ts';
+import tasksRouter from './routers/tasksRouter.ts';
 
 const app = new Application();
 app.use(usersRouter.routes());
